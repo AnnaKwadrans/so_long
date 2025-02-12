@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akwadran <akwadran@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 17:25:56 by akwadran          #+#    #+#             */
-/*   Updated: 2024/11/30 17:26:03 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:41:55 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*read_file(int fd, char *storage)
 		if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
-		storage = ft_strjoin(storage, buffer);
+		storage = ft_strjoin_gnl(storage, buffer);
 	}
 	return (free(buffer), storage);
 }
@@ -121,7 +121,7 @@ char	*move_storage(char *storage)
 		index++;
 	while (storage[index + len])
 		len++;
-	aux = ft_substr(storage, index, len);
+	aux = ft_substr_gnl(storage, index, len);
 	free(storage);
 	return (aux);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akwadran <akwadran@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 10:30:15 by akwadran          #+#    #+#             */
-/*   Updated: 2024/11/25 01:33:03 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:39:31 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "get_next_line.h"
-
+/*
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
@@ -51,8 +51,8 @@ char	*ft_strdup(const char *s)
 	ft_strlcpy(ptr, s, sizeof(char) * len);
 	return (ptr);
 }
-
-char	*ft_strjoin(char *s1, const char *s2)
+*/
+char	*ft_strjoin_gnl(char *s1, const char *s2)
 {
 	char	*ptr;
 	int		len;
@@ -81,7 +81,7 @@ char	*ft_strjoin(char *s1, const char *s2)
 	return (ptr);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr_gnl(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
 	size_t	substr_len;

@@ -6,7 +6,7 @@
 #    By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/16 20:46:06 by akwadran          #+#    #+#              #
-#    Updated: 2024/10/15 21:38:29 by akwadran         ###   ########.fr        #
+#    Updated: 2025/02/12 20:41:28 by akwadran         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
-SRC = ft_ctype.c ft_ctype2.c ft_put.c ft_stdlib.c ft_str.c ft_str2.c ft_str3.c ft_string.c ft_string2.c ft_string3.c
+SRC = ft_ctype.c ft_ctype2.c ft_put.c ft_stdlib.c ft_str.c ft_str2.c ft_str3.c \
+	ft_string.c ft_string2.c ft_string3.c get_next_line.c get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 
