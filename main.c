@@ -6,7 +6,7 @@
 /*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:03:51 by akwadran          #+#    #+#             */
-/*   Updated: 2025/02/12 20:54:03 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:43:10 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ int	key_hook(int keycode, t_vars *var, t_data *img)
 
 
 //int	main(int argc, char **argv)
-int	main(void)
+int	main(int argc, char **argv)
 {
 	//open - read map
 	//validate map
 	//
-
+	if (argc != 2)
+		exit (1);
+	handle_map(argv[1]);
 	//void	*mlx;
 	//void	*window;
 	t_vars	var;
