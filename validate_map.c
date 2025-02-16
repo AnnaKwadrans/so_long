@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-t_map	init_map(int fd)
+t_map	*init_map(int fd)
 {
 	t_map	map;
 	int	i;
@@ -46,12 +46,12 @@ bool	is_rectangular(t_map map)
 
 bool	has_wall(t_map map)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (map.map[0][i] && map.map[map.line_length - 1])
 	{
-		if (map.map[0][i] != '1' || map.map[map.line_length - 1] != '1')
+		if (map.map[0][i] != '1' || *(map).map[map.line_length - 1] != '1')
 			return (0);
 		i++;
 	}
@@ -65,13 +65,38 @@ bool	has_wall(t_map map)
 	return (1);
 }
 
-void	handle_map(char *map)
+t_map	*handle_map(char *file)
 {
-	int	fd;
+	int		fd;
+	t_map	*map;
 
-	fd = open(map);
+	fd = open(file, O_RDONLY);
 	if (fd <= 0)
 		exit(1);
-	
-	
+	map = init_map(fd);
+	//validate
+	return (map);
 }
+
+void	print_map(t_map *map)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < map->rows)
+	{
+		while (x < map->line_length)
+		{
+			printf("%c", map->map[x][y]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
+//void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
+//	int *width,int *height)
+
+

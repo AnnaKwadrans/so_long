@@ -10,13 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <X11/keysym.h>
-#include "mlx_linux/mlx.h"
-#include "libft/libft.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# include <stdlib.h>
+# include <math.h>
+# include <stdio.h>
+# include <stdbool.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <X11/keysym.h>
+# include "mlx/mlx.h"
+# include "libft/libft.h"
+# define TILE 16
 
 typedef struct	s_data
 {
@@ -27,15 +32,23 @@ typedef struct	s_data
 	int	endian;
 }		t_data;
 
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}		t_vars;
-
 typedef struct s_map
 {
 	char	**map;
-	int	line_length;
-	int	rows;
+	size_t	line_length;
+	size_t	rows;
 }		t_map;
+
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+	t_map	*map;
+	t_data	img[5];
+}		t_game;
+
+t_map	init_map(int fd);
+t_map	*handle_map(char *file);
+void	print_map(t_map *map);
+
+#endif
