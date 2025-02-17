@@ -47,7 +47,7 @@ typedef struct s_game
 	t_data	img[5];
 }		t_game;
 
-t_map	init_map(int fd);
+t_map	*init_map(int fd, char *file);
 t_map	*handle_map(char *file);
 void	print_map(t_map *map);
 

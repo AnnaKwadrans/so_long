@@ -20,7 +20,17 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-
+int	close_game(t_game *var)
+{
+	mlx_destroy_image((var)->mlx, (var)->img->img);
+	mlx_destroy_window((var)->mlx, (var)->win);
+	mlx_destroy_display((var)->mlx);
+	free((var)->map);
+	var->map = NULL;
+	free((var)->mlx);
+	var->mlx = NULL;
+	return (0);
+}
 
 int	key_hook(int keycode, t_game *var)
 	{
@@ -104,6 +114,7 @@ int	main(int argc, char **argv)
 	//mlx_pixel_put(mlx, window, 1000, 500, 0x00FF0000);
 	mlx_put_image_to_window(var.mlx, var.win, var.img[0].img, 0, 0);
 	mlx_key_hook(var.win, key_hook, &var);
+	mlx_hook(var.win, 17, 0, close_game, &var);
 	mlx_loop(var.mlx);
 	//mlx_destroy_image(var.mlx, var.img->img);
 	//mlx_destroy_window(var.mlx, var.win);

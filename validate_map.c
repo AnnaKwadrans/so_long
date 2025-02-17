@@ -12,21 +12,46 @@
 
 #include "so_long.h"
 
-t_map	*init_map(int fd)
+static size_t	get_rows(int fd)
 {
-	t_map	map;
+	size_t	rows;
+	char	*buffer;
+
+	buffer = malloc(sizeof(char));
+	if (!buffer)
+		return (0);
+	rows = 1;
+	while (read(fd, buffer, 1))
+	{
+		if (*buffer == '\n')
+			rows++;
+	}
+	close(fd);
+	return (rows);
+}
+
+t_map	*init_map(int fd, char *file)
+{
+	t_map	*map;
 	int	i;
 
-	map.rows = 0;
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->rows = get_rows(fd);
+	map->map = malloc(sizeof(char *) * (map->rows + 1));
+	fd = open(file, O_RDONLY);
 	i = 0;
-	map.map[i] = get_next_line(fd);
-	map.line_length = ft_strlen(map.map[i]);
-	while (map.map[i])
+	map->map[i] = get_next_line(fd);
+	map->line_length = ft_strlen(map->map[i]);
+	map->rows = 0;
+	while (map->map[i])
 	{
 		i++;
-		map.rows++;
-		map.map[i] = get_next_line(fd);
+		map->rows++;
+		map->map[i] = get_next_line(fd);
 	}
+	map->map[i + 1] = NULL;
 	return (map);
 }
 
@@ -73,28 +98,32 @@ t_map	*handle_map(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd <= 0)
 		exit(1);
-	map = init_map(fd);
+	map = init_map(fd, file);
 	//validate
 	return (map);
 }
 
 void	print_map(t_map *map)
 {
-	int	x;
-	int	y;
+	//size_t	x;
+	size_t	y;
 
-	x = 0;
 	y = 0;
-	while (y < map->rows)
+	//while (y < map->rows)
+	while (map->map[y])
 	{
+		/*x = 0;
 		while (x < map->line_length)
 		{
 			printf("%c", map->map[x][y]);
 			x++;
 		}
-		printf("\n");
+		printf("\n");*/
+		ft_putstr_fd(map->map[y], 1);
+		free(map->map[y]);
 		y++;
 	}
+	free(map->map);
 }
 //void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
 //	int *width,int *height)

@@ -18,7 +18,7 @@ OBJ = $(SRC:.c=.o)
 $(NAME): $(OBJ)
 	make -C $(LIBFT_DIR)
 	make -C $(MLX_DIR)
-	$(CC) $(CFLAGS) $(OBJ) -I$(MLX_DIR) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -I$(MLX_DIR) $(MLX_FLAGS) $(LIBFT) -o $(NAME)
 
 .PHONY: all clean fclean re
 
