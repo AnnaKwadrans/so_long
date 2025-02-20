@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 	var.img[0].addr = mlx_get_data_addr(&var.img[0].img, &var.img[0].bits_per_pixel, &var.img[0].line_length,
 			&var.img[0].endian);
 	var.img[0].img = mlx_xpm_file_to_image(var.mlx, "textures/grass.xpm", &var.img[0].line_length, &var.img[0].bits_per_pixel);
-	
+	var.img[1].img = mlx_xpm_file_to_image(var.mlx, "textures/wall.xpm", &var.img[0].line_length, &var.img[0].bits_per_pixel);
 	//var.img = &img;
 	/*
 	int	i;
@@ -113,7 +113,8 @@ int	main(int argc, char **argv)
 	*/
 	//*(unsigned int *)(img.addr + (100 * img.line_length + 150) * (img.bits_per_pixel / 8)) = 0x00FF0000;
 	//mlx_pixel_put(mlx, window, 1000, 500, 0x00FF0000);
-	mlx_put_image_to_window(var.mlx, var.win, var.img[0].img, 0, 0);
+	//mlx_put_image_to_window(var.mlx, var.win, var.img[0].img, 0, 0);
+	put_map_to_window(var);
 	mlx_key_hook(var.win, key_hook, &var);
 	mlx_hook(var.win, 17, 0, close_game, &var);
 	mlx_loop(var.mlx);

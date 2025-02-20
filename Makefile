@@ -8,7 +8,7 @@ MLX_DIR = mlx
 MLX = $(MLX_DIR)libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm -lbsd
 
-SRC = main.c validate_map.c
+SRC = main.c validate_map.c manage_img.c
 
 OBJ = $(SRC:.c=.o)
 
