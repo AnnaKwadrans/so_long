@@ -92,6 +92,7 @@ int	main(int argc, char **argv)
 	var.img[0].img = mlx_new_image(var.mlx, var.map->line_length * TILE, var.map->rows * TILE);
 	var.img[0].addr = mlx_get_data_addr(&var.img[0].img, &var.img[0].bits_per_pixel, &var.img[0].line_length,
 			&var.img[0].endian);
+	var.img[0].img = mlx_xpm_file_to_image(var.mlx, "textures/grass.xpm", &var.img[0].line_length, &var.img[0].bits_per_pixel);
 	
 	//var.img = &img;
 	/*

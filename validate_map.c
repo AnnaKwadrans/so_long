@@ -43,15 +43,16 @@ t_map	*init_map(int fd, char *file)
 	fd = open(file, O_RDONLY);
 	i = 0;
 	map->map[i] = get_next_line(fd);
-	map->line_length = ft_strlen(map->map[i]);
-	map->rows = 0;
+	map->line_length = ft_strlen(map->map[i]) - 1;
+	map->map[i][map->line_length] = '\0';
 	while (map->map[i])
 	{
 		i++;
-		map->rows++;
 		map->map[i] = get_next_line(fd);
+		if (map->map[i])
+			map->map[i][map->line_length] = '\0';
 	}
-	map->map[i + 1] = NULL;
+	map->map[i] = NULL;
 	return (map);
 }
 
@@ -119,13 +120,12 @@ void	print_map(t_map *map)
 			x++;
 		}
 		printf("\n");*/
-		ft_putstr_fd(map->map[y], 1);
+		ft_putendl_fd(map->map[y], 1);
 		free(map->map[y]);
 		y++;
 	}
 	free(map->map);
 }
-//void	*mlx_xpm_file_to_image(t_xvar *xvar,char *filename,
-//	int *width,int *height)
+
 
 
