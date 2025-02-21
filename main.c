@@ -22,45 +22,72 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 int	close_game(t_game *var)
 {
-	mlx_destroy_image((var)->mlx, (var)->img->img);
+	print_map(var->map);
+	mlx_destroy_image((var)->mlx, (var)->bg.img);
+	mlx_destroy_image((var)->mlx, (var)->wall.img);
+	mlx_destroy_image((var)->mlx, (var)->player.img);
 	mlx_destroy_window((var)->mlx, (var)->win);
 	mlx_destroy_display((var)->mlx);
 	free((var)->map);
 	var->map = NULL;
 	free((var)->mlx);
 	var->mlx = NULL;
+	
 	return (0);
 }
 
 int	key_hook(int keycode, t_game *var)
 	{
+		printf("%d\n", keycode);
 		if (keycode == XK_Escape)
 		{
-			mlx_destroy_image((var)->mlx, (var)->img->img);
-			mlx_destroy_window((var)->mlx, (var)->win);
-			mlx_destroy_display((var)->mlx);
-			
-			//free((img)->img);
-			free((var)->mlx);
+			close_game(var);
 			return (0);
 		}
-		else if (keycode == XK_W)
+		else if (keycode == 119) // W
 		{
-
+			if (var->map->map[var->player_y - 1][var->player_x] != '1')
+			{
+				var->map->map[var->player_y][var->player_x] = '0';
+				var->player_y--;
+				var->map->map[var->player_y][var->player_x] = 'P';
+				put_map_to_window(var);
+			}
+			printf("KEY W\n");
 		}
-		else if (keycode == XK_S)
+		else if (keycode == 115) // S
 		{
-
+			if (var->map->map[var->player_y + 1][var->player_x] != '1')
+			{
+				var->map->map[var->player_y][var->player_x] = '0';
+				var->player_y++;
+				var->map->map[var->player_y][var->player_x] = 'P';
+				put_map_to_window(var);
+			}
+			printf("KEY S\n");
 		}
-		else if (keycode == XK_A)
+		else if (keycode == 97) // A
 		{
-
+			if (var->map->map[var->player_y][var->player_x - 1] != '1')
+			{
+				var->map->map[var->player_y][var->player_x] = '0';
+				var->player_x--;
+				var->map->map[var->player_y][var->player_x] = 'P';
+				put_map_to_window(var);
+			}
+			printf("KEY A\n");
 		}
-		else if (keycode == XK_D)
+		else if (keycode == 100) // D
 		{
-
+			if (var->map->map[var->player_y][var->player_x + 1] != '1')
+			{
+				var->map->map[var->player_y][var->player_x] = '0';
+				var->player_x++;
+				var->map->map[var->player_y][var->player_x] = 'P';
+				put_map_to_window(var);
+			}
+			printf("KEY D\n");
 		}
-		printf("KEY");
 		return (0);
 	}
 
@@ -87,13 +114,16 @@ int	main(int argc, char **argv)
 	if (!(argc == 2))
 		exit(1);
 	var.map = handle_map(argv[1]);
-	print_map(var.map);
+	
+	find_player(&var);
 	var.win = mlx_new_window(var.mlx, var.map->line_length * TILE, var.map->rows * TILE, "hola");
-	var.img[0].img = mlx_new_image(var.mlx, var.map->line_length * TILE, var.map->rows * TILE);
-	var.img[0].addr = mlx_get_data_addr(&var.img[0].img, &var.img[0].bits_per_pixel, &var.img[0].line_length,
-			&var.img[0].endian);
-	var.img[0].img = mlx_xpm_file_to_image(var.mlx, "textures/grass.xpm", &var.img[0].line_length, &var.img[0].bits_per_pixel);
-	var.img[1].img = mlx_xpm_file_to_image(var.mlx, "textures/wall.xpm", &var.img[0].line_length, &var.img[0].bits_per_pixel);
+	var.bg.img = mlx_new_image(var.mlx, var.map->line_length * TILE, var.map->rows * TILE);
+	var.bg.addr = mlx_get_data_addr(&var.bg.img, &var.bg.bits_per_pixel, &var.bg.line_length,
+			&var.bg.endian);
+	var.bg.img = mlx_xpm_file_to_image(var.mlx, "textures/grass.xpm", &var.bg.line_length, &var.bg.bits_per_pixel);
+	var.wall.img = mlx_xpm_file_to_image(var.mlx, "textures/wall.xpm", &var.wall.line_length, &var.wall.bits_per_pixel);
+	var.player.img = mlx_xpm_file_to_image(var.mlx, "textures/player.xpm", &var.player.line_length, &var.player.bits_per_pixel);
+	
 	//var.img = &img;
 	/*
 	int	i;
@@ -114,7 +144,7 @@ int	main(int argc, char **argv)
 	//*(unsigned int *)(img.addr + (100 * img.line_length + 150) * (img.bits_per_pixel / 8)) = 0x00FF0000;
 	//mlx_pixel_put(mlx, window, 1000, 500, 0x00FF0000);
 	//mlx_put_image_to_window(var.mlx, var.win, var.img[0].img, 0, 0);
-	put_map_to_window(var);
+	put_map_to_window(&var);
 	mlx_key_hook(var.win, key_hook, &var);
 	mlx_hook(var.win, 17, 0, close_game, &var);
 	mlx_loop(var.mlx);

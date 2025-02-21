@@ -44,13 +44,20 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_map	*map;
-	t_data	img[5];
+	t_data	bg;
+	t_data	wall;
+	t_data	player;
+	t_data	chest;
+	t_data	exit;
+	int		player_x;
+	int		player_y;
 }		t_game;
 
 t_map	*init_map(int fd, char *file);
 t_map	*handle_map(char *file);
 void	print_map(t_map *map);
-void    print_background(t_game var);
-void    print_walls(t_game var);
+void    put_map_to_window(t_game *var);
+//void    print_walls(t_game var);
+void    find_player(t_game *var);
 
 #endif
