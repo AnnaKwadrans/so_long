@@ -6,102 +6,82 @@
 /*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 21:02:38 by akwadran          #+#    #+#             */
-/*   Updated: 2025/02/13 22:05:04 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:57:52 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static size_t	get_rows(int fd)
+static bool	find_player(t_game *var)
 {
-	size_t	rows;
-	char	*buffer;
+	size_t	x;
+	size_t	y;
 
-	buffer = malloc(sizeof(char));
-	if (!buffer)
-		return (0);
-	rows = 1;
-	while (read(fd, buffer, 1))
+	y = 0;
+	while (y < var->map->rows)
 	{
-		if (*buffer == '\n')
-			rows++;
+		x = 0;
+		while (x < var->map->line_length)
+		{
+			if (var->map->map[y][x] == 'P')
+			{
+				var->player_y = y;
+				var->player_x = x;
+				return (1);
+			}
+			x++;
+		}
+		y++;
 	}
-	close(fd);
-	return (rows);
+	return (0);
 }
 
-t_map	*init_map(int fd, char *file)
+static bool	is_rectangular(t_map *map)
 {
-	t_map	*map;
 	int	i;
 
-	map = malloc(sizeof(t_map));
-	if (!map)
-		return (NULL);
-	map->rows = get_rows(fd);
-	map->map = malloc(sizeof(char *) * (map->rows + 1));
-	fd = open(file, O_RDONLY);
 	i = 0;
-	map->map[i] = get_next_line(fd);
-	map->line_length = ft_strlen(map->map[i]) - 1;
-	map->map[i][map->line_length] = '\0';
 	while (map->map[i])
 	{
-		i++;
-		map->map[i] = get_next_line(fd);
-		if (map->map[i])
-			map->map[i][map->line_length] = '\0';
-	}
-	map->map[i] = NULL;
-	return (map);
-}
-
-bool	is_rectangular(t_map map)
-{
-	int	i;
-
-	i = 0;
-	while (map.map[i])
-	{
-		if (ft_strlen(map.map[i]) != map.line_length)
+		if (ft_strlen(map->map[i]) != map->line_length)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-bool	has_wall(t_map map)
+static bool	has_wall(t_map *map)
 {
 	size_t	i;
 
+	printf("%ld, %ld\n", map->line_length, map->rows);
 	i = 0;
-	while (map.map[0][i] && map.map[map.line_length - 1])
+	while (i < map->line_length)
 	{
-		if (map.map[0][i] != '1' || *(map).map[map.line_length - 1] != '1')
+		if (map->map[0][i] != '1' || map->map[map->rows - 1][i] != '1')
 			return (0);
 		i++;
 	}
 	i = 1;
-	while (i < map.line_length - 2)
+	while (i < map->rows - 1)
 	{
-		if (map.map[i][0] != '1' || map.map[i][map.line_length - 1] != '1')
+		if (map->map[i][0] != '1' || map->map[i][map->line_length - 1] != '1')
 			return (0);
 		i++;
 	}
 	return (1);
 }
-
-t_map	*handle_map(char *file)
+/*
+static bool	valid_route(t_map *map)
 {
-	int		fd;
-	t_map	*map;
-
-	fd = open(file, O_RDONLY);
-	if (fd <= 0)
-		exit(1);
-	map = init_map(fd, file);
-	//validate
-	return (map);
+	
+}
+*/
+bool	validate_map(t_map *map, t_game *var)
+{
+	if (has_wall(map) && is_rectangular(map) && find_player(var) /**/)
+		return (1);
+	return (0);
 }
 
 void	print_map(t_map *map)
@@ -127,6 +107,20 @@ void	print_map(t_map *map)
 	free(map->map);
 }
 
+void	free_map(t_map *map)
+{
+	int	i;
 
+	i = 0;
+	while (map->map[i])
+	{
+		free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+	map->map = NULL;
+	free(map);
+	map = NULL;
+}
 
 

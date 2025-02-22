@@ -6,7 +6,7 @@
 /*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 15:54:10 by akwadran          #+#    #+#             */
-/*   Updated: 2025/02/13 21:53:31 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:47:30 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,17 @@ typedef struct s_game
 	int		player_y;
 }		t_game;
 
-t_map	*init_map(int fd, char *file);
-t_map	*handle_map(char *file);
+void	init_game(t_game *var, char *file);
+t_map	*init_map(char *file);
+bool	validate_map(t_map *map, t_game *var);
+void	init_img(t_game *var, t_data *img, char *file, int x, int y);
+
+void	free_map(t_map *map);
+
+//t_map	*handle_map(char *file);
 void	print_map(t_map *map);
 void    put_map_to_window(t_game *var);
 //void    print_walls(t_game var);
-void    find_player(t_game *var);
+//void    find_player(t_game *var);
 
 #endif
