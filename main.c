@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+/*
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -19,75 +19,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
+*/
 
-int	close_game(t_game *var)
-{
-	free_map(var->map);
-	mlx_destroy_image((var)->mlx, (var)->bg.img);
-	//mlx_destroy_image((var)->mlx, (var)->wall.img);
-	//mlx_destroy_image((var)->mlx, (var)->player.img);
-	mlx_destroy_window((var)->mlx, (var)->win);
-	mlx_destroy_display((var)->mlx);
-	free((var)->mlx);
-	var->mlx = NULL;
-	
-	exit(0);
-}
 
-int	key_hook(int keycode, t_game *var)
-	{
-		printf("%d\n", keycode);
-		if (keycode == XK_Escape)
-		{
-			close_game(var);
-			return (0);
-		}
-		else if (keycode == 119) // W
-		{
-			if (var->map->map[var->player_y - 1][var->player_x] != '1')
-			{
-				var->map->map[var->player_y][var->player_x] = '0';
-				var->player_y--;
-				var->map->map[var->player_y][var->player_x] = 'P';
-				put_map_to_window(var);
-			}
-			printf("KEY W\n");
-		}
-		else if (keycode == 115) // S
-		{
-			if (var->map->map[var->player_y + 1][var->player_x] != '1')
-			{
-				var->map->map[var->player_y][var->player_x] = '0';
-				var->player_y++;
-				var->map->map[var->player_y][var->player_x] = 'P';
-				put_map_to_window(var);
-			}
-			printf("KEY S\n");
-		}
-		else if (keycode == 97) // A
-		{
-			if (var->map->map[var->player_y][var->player_x - 1] != '1')
-			{
-				var->map->map[var->player_y][var->player_x] = '0';
-				var->player_x--;
-				var->map->map[var->player_y][var->player_x] = 'P';
-				put_map_to_window(var);
-			}
-			printf("KEY A\n");
-		}
-		else if (keycode == 100) // D
-		{
-			if (var->map->map[var->player_y][var->player_x + 1] != '1')
-			{
-				var->map->map[var->player_y][var->player_x] = '0';
-				var->player_x++;
-				var->map->map[var->player_y][var->player_x] = 'P';
-				put_map_to_window(var);
-			}
-			printf("KEY D\n");
-		}
-		return (0);
-	}
 
 
 
@@ -151,7 +85,7 @@ int	main(int argc, char **argv)
 	
 	
 	
-	//put_map_to_window(&var);
+	put_map_to_window(&var);
 	
 	
 	mlx_key_hook(var.win, key_hook, &var);

@@ -13,15 +13,15 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <stdlib.h>
-# include <math.h>
-# include <stdio.h>
+# include <math.h> // quitar
+# include <stdio.h> // quitar
 # include <stdbool.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <X11/keysym.h>
 # include "mlx/mlx.h"
 # include "libft/libft.h"
-# define TILE 16
+# define TILE 32
 
 typedef struct	s_data
 {
@@ -37,6 +37,7 @@ typedef struct s_map
 	char	**map;
 	size_t	line_length;
 	size_t	rows;
+	int		obj_count;
 }		t_map;
 
 typedef struct s_game
@@ -51,18 +52,23 @@ typedef struct s_game
 	t_data	exit;
 	int		player_x;
 	int		player_y;
+	int		m_count;
 }		t_game;
 
 void	init_game(t_game *var, char *file);
 t_map	*init_map(char *file);
 bool	validate_map(t_map *map, t_game *var);
-void	init_img(t_game *var, t_data *img, char *file, int x, int y);
+void	init_imgs(t_game *var);
+
+void    put_map_to_window(t_game *var);
+int		key_hook(int keycode, t_game *var);
+int		close_game(t_game *var);
 
 void	free_map(t_map *map);
 
 //t_map	*handle_map(char *file);
 void	print_map(t_map *map);
-void    put_map_to_window(t_game *var);
+
 //void    print_walls(t_game var);
 //void    find_player(t_game *var);
 

@@ -14,9 +14,6 @@
 
 void	init_game(t_game *var, char *file)
 {	
-	int	x;
-	int	y;
-
 	var->mlx = mlx_init();
 	if (!var->mlx)
 		return (perror("Err: Failed mlx init"), exit(1));
@@ -25,24 +22,13 @@ void	init_game(t_game *var, char *file)
 		return (perror("Err: Failed map init"), exit(1));
 	if (!validate_map(var->map, var))
 		return (perror("Error\nNot valid map"), exit(1));
-	var->win = mlx_new_window(var->mlx, var->map->line_length * TILE,
-		var->map->rows * TILE, "so_long");
-	
-	x = var->map->line_length * TILE;
-	y = var->map->rows * TILE;
-
-	var->bg.img = mlx_new_image(var->mlx, x, y);
-	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel, &var->bg.line_length,
-			&var->bg.endian);
-	var->bg.img = mlx_xpm_file_to_image(var->mlx, "textures/grass.xpm", &var->bg.line_length, &var->bg.bits_per_pixel);
-	
-
-	//init_img(var, &var->bg, "textures/grass.xpm", x, y);
-	//init_img(var, &var->wall, "textures/wall.xpm", x, y);
-	//init_img(var, &var->player, "textures/player.xpm", x, y);
-	
-	//init_img(var, &var->chest, "textures/chest.xpm", x, y);
-	//init_img(var, &var->exit, "textures/exit.xpm", x, y);
+	int x = var->map->line_length * TILE;
+	int	y = var->map->rows * TILE;
+		printf("%p %d %d %d\n", var->mlx, x, y, TILE);
+	var->win = mlx_new_window(var->mlx, x,
+		y, "so_long");
+	init_imgs(var);
+	var->m_count = 0;
 }
 /*
 t_map	*handle_map(char *file)
@@ -145,7 +131,7 @@ t_map	*init_map(char *file)
 	if (!map)
 		return (perror("Err: Failed malloc"), NULL);
 	map->rows = get_rows(fd);
-	printf("%ld\n", map->rows);
+	//printf("%ld\n", map->rows);
 	close(fd);
 	if (map->rows == 0)
 		return (NULL);
@@ -155,28 +141,21 @@ t_map	*init_map(char *file)
 	return (map);	
 }
 
-void	init_img(t_game *var, t_data *img, char *file, int x, int y)
+void	init_imgs(t_game *var)
 {
-	img = mlx_new_image(var->mlx, x, y);
-	img->addr = mlx_get_data_addr(&img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	img->img = mlx_xpm_file_to_image(var->mlx, file, &img->line_length, &img->bits_per_pixel);
-	
-	
-	/*
-	var->wall.img = mlx_new_image(var->mlx, var->map->line_length * TILE, var->map->rows * TILE);
-	var->wall.addr = mlx_get_data_addr(&var->wall.img, &var->wall.bits_per_pixel, &var->wall.line_length, &var->wall.endian);
+	var->bg.img = mlx_xpm_file_to_image(var->mlx, "textures/bg.xpm", &var->bg.line_length, &var->bg.bits_per_pixel);
+	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel, &var->bg.line_length,
+			&var->bg.endian);
 	var->wall.img = mlx_xpm_file_to_image(var->mlx, "textures/wall.xpm", &var->wall.line_length, &var->wall.bits_per_pixel);
-	var->player.img = mlx_new_image(var->mlx, var->map->line_length * TILE, var->map->rows * TILE);
+	var->wall.addr = mlx_get_data_addr(&var->wall.img, &var->wall.bits_per_pixel, &var->wall.line_length, &var->wall.endian);
+	var->player.img = mlx_xpm_file_to_image(var->mlx, "textures/player.xpm", &var->player.line_length, &var->player.bits_per_pixel);
 	var->player.addr = mlx_get_data_addr(&var->player.img, &var->player.bits_per_pixel, &var->player.line_length,
-			&var->player.endian);
-	var.player.img = mlx_xpm_file_to_image(var.mlx, "textures/player.xpm", &var.player.line_length, &var.player.bits_per_pixel);
-	var->bg.img = mlx_new_image(var->mlx, var->map->line_length * TILE, var->map->rows * TILE);
-	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel, &var->bg.line_length,
-			&var->bg.endian);
-	var->chest.img = mlx_xpm_file_to_image(var->mlx, "textures/chest.xpm", &var->chest.line_length, &chest->bg.bits_per_pixel);
-	var->bg.img = mlx_new_image(var->mlx, var->map->line_length * TILE, var->map->rows * TILE);
-	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel, &var->bg.line_length,
-			&var->bg.endian);
-	var->bg.img = mlx_xpm_file_to_image(var->mlx, "textures/grass.xpm", &var->bg.line_length, &var->bg.bits_per_pixel);
-	*/
+		&var->player.endian);
+	var->chest.img = mlx_xpm_file_to_image(var->mlx, "textures/chest.xpm", &var->chest.line_length, &var->chest.bits_per_pixel);
+	var->chest.addr = mlx_get_data_addr(&var->chest.img, &var->chest.bits_per_pixel, &var->chest.line_length,
+		&var->chest.endian);
+	var->exit.img = mlx_xpm_file_to_image(var->mlx, "textures/exit.xpm", &var->exit.line_length, &var->exit.bits_per_pixel);
+	var->exit.addr = mlx_get_data_addr(&var->exit.img, &var->exit.bits_per_pixel, &var->exit.line_length,
+		&var->exit.endian);
+	
 }

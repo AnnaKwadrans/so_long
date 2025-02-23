@@ -12,6 +12,12 @@
 
 #include "so_long.h"
 
+// .ber
+// 1 exit, >0 obj, 1 player
+// camino valido
+
+// Error\nMensaje explícito
+
 static bool	find_player(t_game *var)
 {
 	size_t	x;
@@ -54,7 +60,7 @@ static bool	has_wall(t_map *map)
 {
 	size_t	i;
 
-	printf("%ld, %ld\n", map->line_length, map->rows);
+	//printf("%ld, %ld\n", map->line_length, map->rows);
 	i = 0;
 	while (i < map->line_length)
 	{
@@ -71,6 +77,30 @@ static bool	has_wall(t_map *map)
 	}
 	return (1);
 }
+
+static bool	find_objs(t_game *var)
+{
+	size_t	x;
+	size_t	y;
+
+	var->map->obj_count = 0;
+	y = 0;
+	while (y < var->map->rows)
+	{
+		x = 0;
+		while (x < var->map->line_length)
+		{
+			if (var->map->map[y][x] == 'C')
+				var->map->obj_count++;
+			x++;
+		}
+		y++;
+	}
+	if (var->map->obj_count > 0)
+		return (1);
+	return (0);
+}
+
 /*
 static bool	valid_route(t_map *map)
 {
@@ -79,7 +109,8 @@ static bool	valid_route(t_map *map)
 */
 bool	validate_map(t_map *map, t_game *var)
 {
-	if (has_wall(map) && is_rectangular(map) && find_player(var) /**/)
+	if (has_wall(map) && is_rectangular(map) && find_player(var)
+		&& find_objs(var))
 		return (1);
 	return (0);
 }
