@@ -30,20 +30,7 @@ void	init_game(t_game *var, char *file)
 	init_imgs(var);
 	var->m_count = 0;
 }
-/*
-t_map	*handle_map(char *file)
-{
-	int		fd;
-	t_map	*map;
 
-	fd = open(file, O_RDONLY);
-	if (fd <= 0)
-		exit(1);
-	map = init_map(fd, file);
-	//validate
-	return (map);
-}
-*/
 /*
 static size_t	get_rows(int fd)
 {
@@ -123,7 +110,6 @@ t_map	*init_map(char *file)
 	int	fd;
 	t_map	*map;
 
-
 	fd = open(file, O_RDONLY);
 	if (fd <= 0)
 		return (perror("Err: Failed to open file"), NULL);
@@ -131,7 +117,6 @@ t_map	*init_map(char *file)
 	if (!map)
 		return (perror("Err: Failed malloc"), NULL);
 	map->rows = get_rows(fd);
-	//printf("%ld\n", map->rows);
 	close(fd);
 	if (map->rows == 0)
 		return (NULL);
@@ -143,19 +128,25 @@ t_map	*init_map(char *file)
 
 void	init_imgs(t_game *var)
 {
-	var->bg.img = mlx_xpm_file_to_image(var->mlx, "textures/bg.xpm", &var->bg.line_length, &var->bg.bits_per_pixel);
-	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel, &var->bg.line_length,
-			&var->bg.endian);
-	var->wall.img = mlx_xpm_file_to_image(var->mlx, "textures/wall.xpm", &var->wall.line_length, &var->wall.bits_per_pixel);
-	var->wall.addr = mlx_get_data_addr(&var->wall.img, &var->wall.bits_per_pixel, &var->wall.line_length, &var->wall.endian);
-	var->player.img = mlx_xpm_file_to_image(var->mlx, "textures/player.xpm", &var->player.line_length, &var->player.bits_per_pixel);
-	var->player.addr = mlx_get_data_addr(&var->player.img, &var->player.bits_per_pixel, &var->player.line_length,
+	var->bg.img = mlx_xpm_file_to_image(var->mlx, "textures/bg.xpm",
+		&var->bg.line_length, &var->bg.bits_per_pixel);
+	var->bg.addr = mlx_get_data_addr(&var->bg.img, &var->bg.bits_per_pixel,
+		&var->bg.line_length, &var->bg.endian);
+	var->wall.img = mlx_xpm_file_to_image(var->mlx, "textures/wall.xpm",
+		&var->wall.line_length, &var->wall.bits_per_pixel);
+	var->wall.addr = mlx_get_data_addr(&var->wall.img, &var->wall.bits_per_pixel,
+		&var->wall.line_length, &var->wall.endian);
+	var->player.img = mlx_xpm_file_to_image(var->mlx, "textures/player.xpm",
+		&var->player.line_length, &var->player.bits_per_pixel);
+	var->player.addr = mlx_get_data_addr(&var->player.img,
+		&var->player.bits_per_pixel, &var->player.line_length,
 		&var->player.endian);
-	var->chest.img = mlx_xpm_file_to_image(var->mlx, "textures/chest.xpm", &var->chest.line_length, &var->chest.bits_per_pixel);
-	var->chest.addr = mlx_get_data_addr(&var->chest.img, &var->chest.bits_per_pixel, &var->chest.line_length,
-		&var->chest.endian);
-	var->exit.img = mlx_xpm_file_to_image(var->mlx, "textures/exit.xpm", &var->exit.line_length, &var->exit.bits_per_pixel);
+	var->chest.img = mlx_xpm_file_to_image(var->mlx, "textures/chest.xpm",
+		&var->chest.line_length, &var->chest.bits_per_pixel);
+	var->chest.addr = mlx_get_data_addr(&var->chest.img,
+		&var->chest.bits_per_pixel, &var->chest.line_length, &var->chest.endian);
+	var->exit.img = mlx_xpm_file_to_image(var->mlx, "textures/exit.xpm",
+		&var->exit.line_length, &var->exit.bits_per_pixel);
 	var->exit.addr = mlx_get_data_addr(&var->exit.img, &var->exit.bits_per_pixel, &var->exit.line_length,
 		&var->exit.endian);
-	
 }

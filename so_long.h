@@ -13,7 +13,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <stdlib.h>
-# include <math.h> // quitar
 # include <stdio.h> // quitar
 # include <stdbool.h>
 # include <fcntl.h>

@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 # include <unistd.h>
+# include "ft_printf.h"
 
 int		ft_printf(char const *str, ...);
 int		get_format(char format, va_list ap);

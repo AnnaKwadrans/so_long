@@ -21,7 +21,16 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 */
 
+bool	is_ber (char *file)
+{
+	int	len;
 
+	len = ft_strlen(file);
+	if (file[len - 4] == '.' && file[len - 3] == 'b' && file[len - 2] == 'e'
+		&& file[len - 1] == 'r')
+		return (1);
+	return (0);
+}
 
 
 
@@ -39,10 +48,10 @@ int	main(int argc, char **argv)
 	t_game	var;
 	//t_data	img;
 	
-	if (argc >= 2)
+	if (argc >= 2 && is_ber(argv[1]))
 		init_game(&var, argv[1]);
 	else
-		return (ft_putendl_fd("Err: No argument", 1), 0);
+		return (ft_putendl_fd("Error\nNo valid argument", 1), 0);
 	/*
 	var.mlx = mlx_init();
 	if (!var.mlx)
