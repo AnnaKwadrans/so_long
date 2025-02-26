@@ -1,5 +1,3 @@
-// printf
-
 #include "so_long.h"
 
 void    put_map_to_window(t_game *var)
@@ -63,15 +61,15 @@ int	key_hook(int keycode, t_game *var)
 		close_game(var);
 		return (0);
 	}
-	else if (keycode == 119) // W
+	else if (keycode == W_KEY)
         move_player(var, 0, -1);    
-    else if (keycode == 115) // S
+    else if (keycode == S_KEY)
         move_player(var, 0, 1);
-    else if (keycode == 97)  // A
+    else if (keycode == A_KEY)
         move_player(var, -1, 0);
-    else if (keycode == 100) // D       
+    else if (keycode == D_KEY)
         move_player(var, 1, 0);
-	return (0);
+    return (0);
 }
 
 int	close_game(t_game *var)

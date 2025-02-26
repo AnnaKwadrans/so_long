@@ -21,6 +21,11 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 # define TILE 32
+# define NOTIFY_DESTROY 17
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
 
 typedef struct	s_data
 {

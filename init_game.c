@@ -14,6 +14,9 @@
 
 void	init_game(t_game *var, char *file)
 {	
+	size_t	x;
+	size_t	y;
+	
 	var->mlx = mlx_init();
 	if (!var->mlx)
 		return (perror("Err: Failed mlx init"), exit(1));
@@ -22,13 +25,20 @@ void	init_game(t_game *var, char *file)
 		return (perror("Err: Failed map init"), exit(1));
 	if (!validate_map(var->map, var))
 		return (perror("Error\nNot valid map"), exit(1));
-	int x = var->map->line_length * TILE;
-	int	y = var->map->rows * TILE;
-		printf("%p %d %d %d\n", var->mlx, x, y, TILE);
-	var->win = mlx_new_window(var->mlx, x,
-		y, "so_long");
+	x = var->map->line_length * TILE;
+	y = var->map->rows * TILE;
+	var->win = mlx_new_window(var->mlx, x, y, "so_long");
+	if (!var->win)
+	{
+		free_map(var->map);
+		mlx_destroy_display(var->mlx);
+		free(var->mlx);
+		var->mlx = NULL;
+		return (perror("Err: Failed window init"), exit(1));
+	}
 	init_imgs(var);
 	var->m_count = 0;
+	put_map_to_window(var);
 }
 
 /*
