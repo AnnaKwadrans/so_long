@@ -13,8 +13,8 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <stdlib.h>
-# include <stdio.h> // quitar
 # include <stdbool.h>
+# include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <X11/keysym.h>
@@ -67,13 +67,9 @@ void	init_imgs(t_game *var);
 void    put_map_to_window(t_game *var);
 int		key_hook(int keycode, t_game *var);
 int		close_game(t_game *var);
-
 void	free_map(t_map *map);
+t_map	*dup_map(t_map *map);
 
-//t_map	*handle_map(char *file);
 void	print_map(t_map *map);
-
-//void    print_walls(t_game var);
-//void    find_player(t_game *var);
 
 #endif

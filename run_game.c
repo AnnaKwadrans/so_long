@@ -86,3 +86,19 @@ int	close_game(t_game *var)
     var->mlx = NULL;
     exit(0);
 }
+
+void	free_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (map->map[i])
+	{
+		free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+	map->map = NULL;
+	free(map);
+	map = NULL;
+}
