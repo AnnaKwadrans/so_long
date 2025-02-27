@@ -8,7 +8,7 @@ MLX_DIR = mlx
 MLX = $(MLX_DIR)libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm -lbsd
 
-SRC = main.c init_game.c validate_map.c run_game.c
+SRC = main.c init_game.c validate_map.c run_game.c map_utils.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -30,6 +30,6 @@ clean:
 
 fclean:	clean
 	$(RM) $(NAME) $(LIBFT)
-
+	make clean -C $(MLX_DIR)
 
 re:	fclean all
