@@ -6,7 +6,7 @@ LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 MLX_DIR = mlx
 MLX = $(MLX_DIR)libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm -lbsd
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext
 
 SRC = main.c init_game.c validate_map.c run_game.c map_utils.c
 

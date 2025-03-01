@@ -6,7 +6,7 @@
 /*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 11:32:47 by akwadran          #+#    #+#             */
-/*   Updated: 2025/02/27 21:07:22 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:05:27 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void	init_game(t_game *var, char *file)
 	if (!var->map)
 		return (ft_printf("Error\nFailed map init\n"), exit(1));
 	if (!validate_map(var->map, var))
-	{
-		break_init(var);
-		return (ft_printf("Error\nMap not valid\n"), exit(1));
-	}
+		return (break_init(var), exit(1));
 	x = var->map->line_length * TILE;
 	y = var->map->rows * TILE;
 	var->win = mlx_new_window(var->mlx, x, y, "so_long");

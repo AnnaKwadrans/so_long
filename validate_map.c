@@ -6,7 +6,7 @@
 /*   By: akwadran <akwadran@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 21:02:38 by akwadran          #+#    #+#             */
-/*   Updated: 2025/02/27 21:30:23 by akwadran         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:04:27 by akwadran         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,23 @@ bool	validate_map(t_map *map, t_game *var)
 	t_map	*dup;
 	bool	route_ok;
 
-	if (has_wall(map) && is_rectangular(map) && count_elem(var, 'P') == 1
-		&& count_elem(var, 'E') == 1 && count_elem(var, 'C') > 0)
-	{
-		var->map->obj_count = count_elem(var, 'C');
-		dup = dup_map(map);
-		route_ok = valid_route(dup->map, var->map->obj_count, var->player_y,
-				var->player_x);
-		free_map(dup);
-		return (route_ok);
-	}
-	return (0);
+	if (!has_wall(map))
+		return (ft_printf("Error\nMap must be surrounded by walls\n"), 0);
+	if (!is_rectangular(map))
+		return (ft_printf("Error\nMap must be rectancular\n"), 0);
+	if (!(count_elem(var, 'P') == 1))
+		return (ft_printf("Error\nMap must have 1 player\n"), 0);
+	if (!(count_elem(var, 'E') == 1))
+		return (ft_printf("Error\nMap must have 1 exit\n"), 0);
+	var->map->obj_count = count_elem(var, 'C');
+	if (!(var->map->obj_count > 0))
+		return (ft_printf("Error\nMap must have at least 1 collectable\n"), 0);
+	dup = dup_map(map);
+	route_ok = valid_route(dup->map, var->map->obj_count, var->player_y,
+			var->player_x);
+	free_map(dup);
+	dup = NULL;
+	if (!route_ok)
+		ft_printf("Error\nMap must have a valid route\n");
+	return (route_ok);
 }
